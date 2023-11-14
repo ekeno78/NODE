@@ -25,10 +25,11 @@ app.listen(port,
     }
 )
 
+
 // Crée la route qui renvoie tout
 app.get(
     '/',
-    findHasardPokemon
+    findAllPokemon
 )
 
 //fonction
@@ -56,13 +57,101 @@ function findHasardPokemon(request, response) {
 
     // analyse du JSON
     let pokedex = JSON.parse(data);
-    
+
+    // définition des limites
     let idMin = 1;
 
     let idMax = pokedex.length;
 
-    let hasard = Math.floor(Math.random() * idMax) + 1;
+    // récupération de la taille du Pokédex
+    //let pokedexTaille = pokedex.length;
 
-    response.send(pokedex[hasard]);
+    // def de l'id qui sera un random int
+    let hasardId = Math.floor(Math.random() * (idMax - idMin)) + idMin;
+
+    // recherche du pokemon qui correspond à l'id définit juste au dessus
+    let randomPokemon = pokedex.find(pokemon => pokemon.id === hasardId);
+
+    // renvoie le pokemon aléatoire
+    response.send(randomPokemon);
 
 }
+
+app.get(
+    '/pokemon/:id',
+    findThisPokemon
+
+)
+
+function findThisPokemon(request, response) {
+    console.log("par id")
+    console.log(request.params.id)
+    // lecture
+    let data = fs.readFileSync(POKEDEX_SRC);
+
+    // analyse du JSON
+    let pokedex = JSON.parse(data);
+
+    // récupère l'id écrit dans la route 
+    let thisPokemon = request.params.id - 1;
+
+    let pokedexTaille = pokedex.length;
+
+    if (thisPokemon > pokedexTaille - 1) {
+        response.send('ID trop grand, désolé')
+
+    } else if (thisPokemon < 0) {
+        response.send('ID trop petit, désolé')
+
+    } else {
+        // renvoie le pokemon  dont l'ID est saisit
+        response.send(pokedex[thisPokemon]);
+    }
+
+}
+
+app.get(
+    '/pokemon/nom/:name',
+    findNamePokemon
+
+)
+
+function findNamePokemon(request, response) {
+    console.log("par nom")
+    console.log(request.params.name)
+    // lecture
+    let data = fs.readFileSync(POKEDEX_SRC);
+
+    // analyse du JSON
+    let pokedex = JSON.parse(data);
+
+    // récupère le name écrit dans la route 
+    let namePokemon = request.params.name ;
+
+    // Constante du pokemon écrit dans la route qui filtre, et filtre pour capter le fr
+    const lePokemon= pokedex.filter((pokemon) => pokemon.name.french === namePokemon);
+
+   
+        // renvoie le pokemon  dont le nom est saisit
+        response.send(lePokemon);
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
