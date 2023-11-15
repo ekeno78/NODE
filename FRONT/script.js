@@ -37,8 +37,10 @@ function toutAfficher(){
             row.insertCell(3).textContent = pokemon.base.Attack;
             row.insertCell(4).textContent = pokemon.base.Defense;
             row.insertCell(4).textContent = pokemon.type;
-
-            const thumbnailCell = row.insertCell(5);
+            row.insertCell(5).textContent = pokemon.base.HP;
+            row.insertCell(7).textContent = pokemon.base.Speed;
+          
+            const thumbnailCell = row.insertCell(8);
 
             const img = document.createElement('img');
 

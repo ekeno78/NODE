@@ -8,7 +8,7 @@
 
 body {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #a3c4e5;
+    background-color: #e5a3bf;
     margin: 20px;
 }
 
@@ -18,19 +18,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #dd3535;
-}
 
 
 .table {
